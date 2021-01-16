@@ -4,6 +4,8 @@ const socket = io('http://127.0.0.1:5000');
 socket.on('connect', function() {
  });
 
+ //Run when receive the 'scan' event which is triggered when server is alerted in app.py
+ // Parameters: url (string)-   
 socket.on('scam', function(url, tabID) {
   // info is a (url, id) tuple
     console.log("server says scam to client", url, tabID);
