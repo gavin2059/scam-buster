@@ -12,12 +12,17 @@ socket.on('scam', function(tabID) {
 
 // Called when a new page is loaded
 chrome.webNavigation.onDOMContentLoaded.addListener(function(tab) {
-// Gets info from active tab
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    var activeTab = tabs[0];
-    var url = activeTab.url;
-    var tabID = activeTab.id;
-    console.log('pageload', url, tabID);
-    socket.emit('pageload', url, tabID);
-  });
+// Gets info from the opened page
+  var url = tab.url;
+  var tabID = tab.id;
+  console.log('pageload', url, tabID);
+  socket.emit('pageload', url, tabID);
+// Gets info from active tab (breaks if alt tab)
+  // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  //   var activeTab = tabs[0];
+  //   var url = activeTab.url;
+  //   var tabID = activeTab.id;
+  //   console.log('pageload', url, tabID);
+  //   socket.emit('pageload', url, tabID);
+  // });
 });
