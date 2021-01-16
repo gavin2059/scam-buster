@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
+import logging
 import detection
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
+log = logging.getLogger('werkzeug')
+log.disabled = True
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
@@ -11,7 +14,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def alert(url, tabID):
     if detection.isScam(url):
         print(url, tabID)
-        socketio.emit('scam', tabID)
+        socketio.emit('scam', (url, tabID))
 
 
 if __name__ == '__main__':
